@@ -1,8 +1,8 @@
 # 🔐 Web Application Security Labs / Labs de Sécurité Web
 ### by Anas TAGUI
 
-> **EN:** A practical walkthrough of real web security vulnerabilities — how I found them, exploited them, and what they taught me.  
-> **FR:** Un compte-rendu pratique de vraies vulnérabilités web — comment je les ai trouvées, exploitées, et ce qu'elles m'ont appris.
+> **EN:** A practical walkthrough of real web security vulnerabilities , how I found them, exploited them, and what they taught me.  
+> **FR:** Un compte-rendu pratique de vraies vulnérabilités web , comment je les ai trouvées, exploitées, et ce qu'elles m'ont appris.
 
 **Tools / Outils:** DVWA · PortSwigger Web Security Academy · Burp Suite Community Edition  
 **Topics / Sujets:** CSRF · Authentication · Session Management · Access Control · IDOR · JWT
@@ -48,9 +48,9 @@ http://localhost/vulnerabilities/csrf/?password_new=hacked&password_conf=hacked&
 
 ### 🟡 Level Medium / Niveau Moyen
 
-**EN:** This level tries to protect itself by checking the `Referer` header — basically asking "where did this request come from?" The catch? It uses `stripos()` to check if the word `localhost` appears *anywhere* in the URL. So I just named my attack file `localhost.html` and served it from my own machine. The check passed.
+**EN:** This level tries to protect itself by checking the `Referer` header , basically asking "where did this request come from?" The catch? It uses `stripos()` to check if the word `localhost` appears *anywhere* in the URL. So I just named my attack file `localhost.html` and served it from my own machine. The check passed.
 
-**FR:** Ce niveau tente de se protéger en vérifiant l'en-tête `Referer` — en demandant "d'où vient cette requête ?". Le problème ? Il utilise `stripos()` pour vérifier si le mot `localhost` apparaît *quelque part* dans l'URL. J'ai donc simplement nommé mon fichier d'attaque `localhost.html` et l'ai servi depuis ma machine. Le filtre est passé.
+**FR:** Ce niveau tente de se protéger en vérifiant l'en-tête `Referer` , en demandant "d'où vient cette requête ?". Le problème ? Il utilise `stripos()` pour vérifier si le mot `localhost` apparaît *quelque part* dans l'URL. J'ai donc simplement nommé mon fichier d'attaque `localhost.html` et l'ai servi depuis ma machine. Le filtre est passé.
 
 **Attack file / Fichier d'attaque (`localhost.html`):**
 ```html
@@ -67,7 +67,7 @@ http://localhost/vulnerabilities/csrf/?password_new=hacked&password_conf=hacked&
 
 Served with / Servi avec: `python3 -m http.server 8000`
 
-> 💡 **Fix:** Verify the full origin, not just a keyword. Or better — use proper CSRF tokens.  
+> 💡 **Fix:** Verify the full origin, not just a keyword. Or better , use proper CSRF tokens.  
 > *Vérifier l'origine complète, pas seulement un mot-clé. Ou mieux : utiliser de vrais jetons CSRF.*
 
 ---
@@ -98,8 +98,8 @@ req.open("GET",
 req.send(null);
 ```
 
-> 💡 **Fix:** CSRF tokens work great — but they rely on XSS being impossible. Fix XSS first. Also use `SameSite=Strict` cookies.  
-> *Les jetons CSRF sont efficaces — mais supposent l'absence de XSS. Corriger d'abord le XSS. Utiliser aussi les cookies `SameSite=Strict`.*
+> 💡 **Fix:** CSRF tokens work great , but they rely on XSS being impossible. Fix XSS first. Also use `SameSite=Strict` cookies.  
+> *Les jetons CSRF sont efficaces , mais supposent l'absence de XSS. Corriger d'abord le XSS. Utiliser aussi les cookies `SameSite=Strict`.*
 
 ---
 
@@ -114,14 +114,14 @@ req.send(null);
 
 **Lab:** [Username enumeration via different responses](https://portswigger.net/web-security/authentication/password-based/lab-username-enumeration-via-different-responses)
 
-**EN:** The login page always returned HTTP 200 — no matter what username you tried. Looked safe. But the response *length* was slightly different when a username actually existed. That tiny difference was enough to enumerate valid accounts using Burp Intruder.
+**EN:** The login page always returned HTTP 200 , no matter what username you tried. Looked safe. But the response *length* was slightly different when a username actually existed. That tiny difference was enough to enumerate valid accounts using Burp Intruder.
 
-**FR:** La page de connexion retournait toujours un HTTP 200 — peu importe le nom d'utilisateur. Ça semblait sûr. Mais la *longueur* de la réponse était légèrement différente quand un nom d'utilisateur existait vraiment. Cette petite différence suffisait à énumérer les comptes valides avec Burp Intruder.
+**FR:** La page de connexion retournait toujours un HTTP 200 , peu importe le nom d'utilisateur. Ça semblait sûr. Mais la *longueur* de la réponse était légèrement différente quand un nom d'utilisateur existait vraiment. Cette petite différence suffisait à énumérer les comptes valides avec Burp Intruder.
 
 **Steps / Étapes:**
 1. Intercept `POST /login` → send to Intruder / *Intercepter `POST /login` → envoyer dans Intruder*
 2. Fuzz the `username` field with the wordlist / *Fuzzer le champ `username` avec la wordlist*
-3. Sort by response length — `arkansas` returned `2986` vs `2984` for all others / *Trier par longueur — `arkansas` retourne `2986` contre `2984` pour les autres*
+3. Sort by response length , `arkansas` returned `2986` vs `2984` for all others / *Trier par longueur , `arkansas` retourne `2986` contre `2984` pour les autres*
 4. Run the same attack on `password` → `matthew` returned a `302` redirect / *Même attaque sur `password` → `matthew` retourne une redirection `302`*
 
 > 💡 **Fix:** Same error message, same response size, every time. Add rate limiting.  
@@ -135,7 +135,7 @@ req.send(null);
 
 **EN:** This one was almost too easy and that's what makes it scary. The app has a two-step login: password first, then a 2FA code. But after entering the password, nothing stops you from just... skipping the 2FA page and navigating directly to `/my-account`. The server never checked whether step 2 was actually completed.
 
-**FR:** Celle-là était presque trop facile — et c'est justement ce qui la rend inquiétante. L'app a une connexion en deux étapes : d'abord le mot de passe, puis un code 2FA. Mais après avoir entré le mot de passe, rien n'empêche de... sauter la page 2FA et naviguer directement vers `/my-account`. Le serveur ne vérifiait jamais si l'étape 2 avait été complétée.
+**FR:** Celle-là était presque trop facile , et c'est justement ce qui la rend inquiétante. L'app a une connexion en deux étapes : d'abord le mot de passe, puis un code 2FA. Mais après avoir entré le mot de passe, rien n'empêche de... sauter la page 2FA et naviguer directement vers `/my-account`. Le serveur ne vérifiait jamais si l'étape 2 avait été complétée.
 
 **Steps / Étapes:**
 1. Log in as `carlos / montoya` / *Se connecter en tant que `carlos / montoya`*
@@ -152,9 +152,9 @@ req.send(null);
 
 **Lab:** [JWT authentication bypass via unverified signature](https://portswigger.net/web-security/jwt/lab-jwt-authentication-bypass-via-unverified-signature)
 
-**EN:** JWTs have three parts: header, payload, and a cryptographic signature that proves the token wasn't tampered with. This server decoded the payload and trusted it — but never actually verified the signature. So I just edited my username in the payload from `wiener` to `administrator`, left the signature untouched, and sent it. Admin access, no questions asked.
+**EN:** JWTs have three parts: header, payload, and a cryptographic signature that proves the token wasn't tampered with. This server decoded the payload and trusted it , but never actually verified the signature. So I just edited my username in the payload from `wiener` to `administrator`, left the signature untouched, and sent it. Admin access, no questions asked.
 
-**FR:** Les JWT ont trois parties : en-tête, payload, et une signature cryptographique qui prouve que le token n'a pas été modifié. Ce serveur décodait le payload et lui faisait confiance — sans jamais vérifier la signature. J'ai donc modifié mon nom d'utilisateur de `wiener` à `administrator`, laissé la signature intacte, et envoyé le tout. Accès admin, sans aucune question.
+**FR:** Les JWT ont trois parties : en-tête, payload, et une signature cryptographique qui prouve que le token n'a pas été modifié. Ce serveur décodait le payload et lui faisait confiance , sans jamais vérifier la signature. J'ai donc modifié mon nom d'utilisateur de `wiener` à `administrator`, laissé la signature intacte, et envoyé le tout. Accès admin, sans aucune question.
 
 **Before / Avant:** `"sub": "wiener"`  
 **After / Après:** `"sub": "administrator"`
@@ -168,9 +168,9 @@ req.send(null);
 
 **Platform / Plateforme:** PortSwigger Web Security Academy
 
-**EN:** This section was a reality check. Most of these vulnerabilities don't require any special tools or clever tricks — just the willingness to try things the developer assumed nobody would try.
+**EN:** This section was a reality check. Most of these vulnerabilities don't require any special tools or clever tricks , just the willingness to try things the developer assumed nobody would try.
 
-**FR:** Cette section a été un vrai réveil. La plupart de ces vulnérabilités ne nécessitent aucun outil spécial ni astuce complexe — juste la volonté d'essayer des choses que le développeur supposait que personne ne tenterait.
+**FR:** Cette section a été un vrai réveil. La plupart de ces vulnérabilités ne nécessitent aucun outil spécial ni astuce complexe , juste la volonté d'essayer des choses que le développeur supposait que personne ne tenterait.
 
 ---
 
@@ -192,9 +192,9 @@ req.send(null);
 
 **Lab:** [User ID controlled by request parameters](https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter-with-unpredictable-user-ids)
 
-**EN:** The app used GUIDs instead of sequential IDs — a smart move. But those GUIDs were visible in the blog's author profile URLs. Once I had Carlos's GUID, I swapped it into my own account URL and accessed his profile, including his API key.
+**EN:** The app used GUIDs instead of sequential IDs , a smart move. But those GUIDs were visible in the blog's author profile URLs. Once I had Carlos's GUID, I swapped it into my own account URL and accessed his profile, including his API key.
 
-**FR:** L'app utilisait des GUIDs au lieu d'IDs séquentiels — une bonne idée. Mais ces GUIDs étaient visibles dans les URLs des profils d'auteurs du blog. Une fois le GUID de Carlos obtenu, je l'ai remplacé dans l'URL de mon propre compte et j'ai accédé à son profil, clé API incluse.
+**FR:** L'app utilisait des GUIDs au lieu d'IDs séquentiels , une bonne idée. Mais ces GUIDs étaient visibles dans les URLs des profils d'auteurs du blog. Une fois le GUID de Carlos obtenu, je l'ai remplacé dans l'URL de mon propre compte et j'ai accédé à son profil, clé API incluse.
 
 > 💡 **Fix:** Hard-to-guess IDs aren't enough. Always check server-side that the requesting user owns the resource.  
 > *Des IDs difficiles à deviner ne suffisent pas. Toujours vérifier côté serveur que l'utilisateur est propriétaire de la ressource.*
@@ -205,9 +205,9 @@ req.send(null);
 
 **Lab:** [Unprotected admin functionality](https://portswigger.net/web-security/access-control/lab-unprotected-admin-functionality)
 
-**EN:** The admin panel wasn't linked anywhere in the UI. The developers thought that was enough. It wasn't — the path `/administrator-panel` was sitting right there in `robots.txt`. Visiting the URL gave full admin access with zero authentication checks.
+**EN:** The admin panel wasn't linked anywhere in the UI. The developers thought that was enough. It wasn't , the path `/administrator-panel` was sitting right there in `robots.txt`. Visiting the URL gave full admin access with zero authentication checks.
 
-**FR:** Le panneau d'administration n'était lié nulle part dans l'interface. Les développeurs pensaient que c'était suffisant. Ce ne l'était pas — le chemin `/administrator-panel` était là, dans `robots.txt`. Visiter l'URL donnait un accès admin complet sans aucune vérification.
+**FR:** Le panneau d'administration n'était lié nulle part dans l'interface. Les développeurs pensaient que c'était suffisant. Ce ne l'était pas , le chemin `/administrator-panel` était là, dans `robots.txt`. Visiter l'URL donnait un accès admin complet sans aucune vérification.
 
 > 💡 **Fix:** Security through obscurity is not security. Every sensitive endpoint needs real authorization checks.  
 > *La sécurité par l'obscurité n'est pas de la sécurité. Chaque endpoint sensible a besoin de vraies vérifications d'autorisation.*
@@ -218,9 +218,9 @@ req.send(null);
 
 **Lab:** [Insecure Direct Object References](https://portswigger.net/web-security/access-control/lab-insecure-direct-object-references)
 
-**EN:** The chat transcript download used a sequential filename in the URL (`2.txt`, `1.txt`, etc.). No check was made to verify who the file belonged to. I changed `2.txt` to `1.txt` and downloaded Carlos's conversation — which contained his plaintext password.
+**EN:** The chat transcript download used a sequential filename in the URL (`2.txt`, `1.txt`, etc.). No check was made to verify who the file belonged to. I changed `2.txt` to `1.txt` and downloaded Carlos's conversation , which contained his plaintext password.
 
-**FR:** Le téléchargement des transcripts de chat utilisait un nom de fichier séquentiel dans l'URL (`2.txt`, `1.txt`, etc.). Aucune vérification n'était faite pour savoir à qui appartenait le fichier. J'ai changé `2.txt` en `1.txt` et téléchargé la conversation de Carlos — qui contenait son mot de passe en clair.
+**FR:** Le téléchargement des transcripts de chat utilisait un nom de fichier séquentiel dans l'URL (`2.txt`, `1.txt`, etc.). Aucune vérification n'était faite pour savoir à qui appartenait le fichier. J'ai changé `2.txt` en `1.txt` et téléchargé la conversation de Carlos , qui contenait son mot de passe en clair.
 
 > 💡 **Fix:** Use signed, user-specific access tokens for file downloads. Always verify ownership server-side.  
 > *Utiliser des tokens d'accès signés et spécifiques à l'utilisateur. Toujours vérifier la propriété côté serveur.*
@@ -229,9 +229,9 @@ req.send(null);
 
 ## Key Takeaways / Ce que j'ai retenu
 
-**EN:** After going through all of these, one pattern became very clear: most of these vulnerabilities aren't sophisticated. They exist because of small assumptions — "nobody will type that URL", "the response looks the same", "we're using GUIDs so we're fine". Security isn't about making things hard to find. It's about making sure that even if someone finds it, they still can't do anything with it.
+**EN:** After going through all of these, one pattern became very clear: most of these vulnerabilities aren't sophisticated. They exist because of small assumptions , "nobody will type that URL", "the response looks the same", "we're using GUIDs so we're fine". Security isn't about making things hard to find. It's about making sure that even if someone finds it, they still can't do anything with it.
 
-**FR:** Après avoir traversé tout ça, un schéma est devenu très clair : la plupart de ces vulnérabilités ne sont pas sophistiquées. Elles existent à cause de petites suppositions — "personne ne tapera cette URL", "la réponse a l'air identique", "on utilise des GUIDs donc on est tranquilles". La sécurité ne consiste pas à rendre les choses difficiles à trouver. C'est s'assurer que même si quelqu'un les trouve, il ne peut rien en faire.
+**FR:** Après avoir traversé tout ça, un schéma est devenu très clair : la plupart de ces vulnérabilités ne sont pas sophistiquées. Elles existent à cause de petites suppositions , "personne ne tapera cette URL", "la réponse a l'air identique", "on utilise des GUIDs donc on est tranquilles". La sécurité ne consiste pas à rendre les choses difficiles à trouver. C'est s'assurer que même si quelqu'un les trouve, il ne peut rien en faire.
 
 | Vulnerability / Vulnérabilité | Root Cause / Cause | Fix / Correction |
 |---|---|---|
